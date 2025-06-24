@@ -10,7 +10,7 @@ Professional Python tool for visualizing and comparing sorting algorithms with r
 
 Interactive visualization tool that compares two sorting algorithms side-by-side with:
 - Real-time animation of 11 different sorting algorithms
-- Customizable dataset size (10-200 elements)
+- Customizable dataset size (10-1000 elements)
 - Performance comparison with winner detection
 - Automatic validation of sorting correctness
 
@@ -50,7 +50,7 @@ python SortingVisualizer.py
 
 ## 🔧 Usage
 
-1. Choose number of bars (10-200)
+1. Choose number of bars (10-1000)
 2. Select two algorithms to compare
 3. Watch real-time visualization
 4. View performance results

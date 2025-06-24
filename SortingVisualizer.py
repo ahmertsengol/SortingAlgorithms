@@ -25,11 +25,11 @@ def get_user_input():
     # Get number of bars
     while True:
         try:
-            n = int(input("Enter number of bars (10-200): "))
-            if 10 <= n <= 200:
+            n = int(input("Enter number of bars (10-1000): "))
+            if 10 <= n <= 1000:
                 break
             else:
-                print("❌ Please enter a number between 10 and 200.")
+                print("❌ Please enter a number between 10 and 1000.")
         except ValueError:
             print("❌ Please enter a valid number.")
         except KeyboardInterrupt:
