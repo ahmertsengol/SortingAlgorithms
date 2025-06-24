@@ -16,7 +16,19 @@
 - **🏆 Winner Detection**: Fastest algorithm automatically marked as winner
 - **🎨 Beautiful UI**: Green bars on black background with intuitive color coding
 
-## 🎮 Demo
+## 🎮 Demo & Screenshots
+
+### 📸 Live Animation Examples
+
+**Merge Sort vs Quick Sort - Animation in Progress**
+![Sorting Animation](images/Example-1.png)
+*Real-time sorting animation showing progress percentages and algorithm comparison*
+
+**Final Results with Validation**
+![Validation Complete](images/Example-2.png)
+*Completed sorting with winner announcement and validation (blue bars indicate successful sorting)*
+
+### 💻 Console Output Example
 
 ```
 🚀 ADVANCED SORTING ALGORITHM VISUALIZER
@@ -85,15 +97,15 @@ python SortingVisualizer.py
 ## 🎨 Visual Elements
 
 ### Color Coding
-- **🟢 Green**: Normal bars
-- **⚫ Black**: Currently selected/comparing bars
-- **🔵 Blue**: Validated correct sorting
+- **🟢 Green**: Normal bars (as seen in Example-1.png during sorting)
+- **⚫ Black**: Currently selected/comparing bars (visible during animation)
+- **🔵 Blue**: Validated correct sorting (as shown in Example-2.png after completion)
 - **🔴 Red**: Validation errors (if any)
 
 ### Animation Phases
-1. **Sorting Phase**: Real-time algorithm execution
-2. **Validation Phase**: Correctness verification
-3. **Results**: Winner announcement and final status
+1. **Sorting Phase**: Real-time algorithm execution with progress tracking (Example-1.png)
+2. **Validation Phase**: Correctness verification with color change to blue
+3. **Results**: Winner announcement and final status (Example-2.png)
 
 ## 🏗️ Project Structure
 
@@ -103,7 +115,13 @@ SortingAlgorithms/
 ├── README.md              # Project documentation
 ├── requirements.txt       # Dependencies
 ├── LICENSE               # MIT License
-└── examples/            # Example outputs
+├── CHANGELOG.md          # Version history
+├── .gitignore           # Git excludes
+├── images/              # Screenshots and visual examples
+│   ├── Example-1.png    # Animation in progress
+│   └── Example-2.png    # Validation complete
+└── examples/            # Sample outputs and documentation
+    └── SAMPLE_OUTPUT.md # Usage examples
 ```
 
 ## 🤝 Contributing
