@@ -1,5 +1,18 @@
 import matplotlib
-matplotlib.use('MacOSX')  # Set backend for macOS compatibility
+import platform
+import os
+
+# Set appropriate backend based on operating system
+if platform.system() == 'Darwin':  # macOS
+    matplotlib.use('MacOSX')
+elif platform.system() == 'Windows':  # Windows
+    matplotlib.use('TkAgg')
+elif platform.system() == 'Linux':  # Linux
+    matplotlib.use('TkAgg')
+else:
+    # Let matplotlib choose the best backend
+    pass
+
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import random
