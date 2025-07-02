@@ -8,6 +8,8 @@ Professional Python tool for visualizing and comparing sorting algorithms with r
 
 ## 📖 Overview
 
+![Sorting Animation](images/Example-Gif.gif)
+
 Interactive visualization tool that compares two sorting algorithms side-by-side with:
 - Real-time animation of 11 different sorting algorithms
 - Customizable dataset size (10-1000 elements)
