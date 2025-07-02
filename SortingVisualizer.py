@@ -514,7 +514,7 @@ class SortingVisualizer:
             algorithm_name = algo_data['name']
             algorithm_finish_frame = algo_data['algorithm_finish_frame']
             validation_start_frame = algo_data.get('validation_start_frame', algorithm_finish_frame + 1)
-            validation_duration = 50  # Validation takes 50 frames
+            validation_duration = 60  # Validation takes 60 frames (1 second)
             is_first_completed = algo_data.get('is_first_completed', False)
             
             # Check if this algorithm should still be running
@@ -645,17 +645,16 @@ class SortingVisualizer:
             algorithm_frames_data[name] = frames
             print(f"     Generated {len(frames)} frames")
         
-        # Calculate execution times for proportional animation timing
+        # Calculate execution times for smart animation timing
         execution_times = {}
         fastest_time = float('inf')
         fastest_algorithm = None
         
-        print("⏱️ Measuring real execution times...")
+        print("⏱️ Measuring algorithm complexity...")
         for name in algorithm_frames_data.keys():
-            # Simulate execution time based on frame count (approximation)
             frame_count = len(algorithm_frames_data[name])
-            # More frames generally means more operations, so longer time
-            exec_time = frame_count * 0.000001  # Simulated time per operation
+            # Simulate execution time based on frame count
+            exec_time = frame_count * 0.000001
             execution_times[name] = exec_time
             print(f"   {name}: {frame_count} frames → {exec_time:.6f}s")
             
@@ -665,16 +664,28 @@ class SortingVisualizer:
         
         print(f"🏆 Fastest: {fastest_algorithm} ({fastest_time:.6f}s)")
         
-        # Calculate animation timing based on real performance
-        BASE_ANIMATION_FRAMES = 600  # Base frames for fastest algorithm
+        # Smart timing system - prevent long waits
+        MIN_ANIMATION_TIME = 3.0    # Minimum animation time (seconds)
+        MAX_ANIMATION_TIME = 12.0   # Maximum animation time (seconds) 
+        FAST_ALGO_FRAMES = 600      # Base frames for fastest algorithm
         
         # Setup figure
         fig, axes = plt.subplots(1, 2, figsize=FIGURE_SIZE)
         fig.patch.set_facecolor(BACKGROUND_COLOR)
         
-        # Prepare algorithm data with proportional timing
+        # Smart timing calculation - prevent long waits
         algorithms_data = []
         first_to_complete = fastest_algorithm
+        
+        # Calculate time ratios with smart limits
+        time_ratios = {}
+        for name in algorithm_frames_data.keys():
+            ratio = execution_times[name] / fastest_time
+            time_ratios[name] = ratio
+        
+        # Apply smart timing limits
+        fastest_finish_time = MIN_ANIMATION_TIME  # Fastest algorithm gets minimum time
+        slowest_finish_time = MAX_ANIMATION_TIME  # Slowest algorithm gets maximum time
         
         for i, (name, frames) in enumerate(algorithm_frames_data.items()):
             ax = axes[i]
@@ -694,13 +705,25 @@ class SortingVisualizer:
                 fontweight='bold'
             )
             
-            # Calculate proportional finish frame based on real execution time
-            time_ratio = execution_times[name] / fastest_time
-            algorithm_finish_frame = int(BASE_ANIMATION_FRAMES * time_ratio)
-            validation_start_frame = algorithm_finish_frame + 10  # Start validation 10 frames after completion
+            # Smart frame calculation with time limits
+            if name == fastest_algorithm:
+                animation_time = fastest_finish_time
+            else:
+                # Scale other algorithms between min and max time
+                max_ratio = max(time_ratios.values())
+                if max_ratio > 1:
+                    # Normalize the ratio to fit within time limits
+                    normalized_ratio = min(time_ratios[name] / max_ratio, 1.0)
+                    animation_time = fastest_finish_time + (slowest_finish_time - fastest_finish_time) * normalized_ratio
+                else:
+                    animation_time = fastest_finish_time
+            
+            # Convert time to frames (assume 60 FPS for smooth animation)
+            algorithm_finish_frame = int(animation_time * 60)  # 60 FPS
+            validation_start_frame = algorithm_finish_frame + 30  # Half second delay
             is_first_completed = (name == first_to_complete)
             
-            print(f"   {name}: ratio {time_ratio:.2f} → finishes at frame {algorithm_finish_frame}")
+            print(f"   {name}: {animation_time:.1f}s → {algorithm_finish_frame} frames")
             
             algorithms_data.append({
                 'bars': bars,
@@ -712,26 +735,29 @@ class SortingVisualizer:
                 'is_first_completed': is_first_completed
             })
         
-        # Calculate animation settings (include validation time)
-        validation_duration = 50
+        # Calculate total animation settings
+        validation_duration = 60  # 1 second validation at 60 FPS
         max_finish_frame = max(algo_data['algorithm_finish_frame'] for algo_data in algorithms_data)
-        total_frames = max_finish_frame + 10 + validation_duration + 30  # Longest sorting + delay + validation + padding
-        target_duration = 18.0  # seconds (longer for validation)
-        interval = max(10, int((target_duration * 1000) / total_frames))
+        total_frames = max_finish_frame + 30 + validation_duration + 60  # Max sorting + delay + validation + padding
         
-        print(f"🎬 Starting proportional animation...")
-        print(f"⏱️ Animation: {total_frames} frames, {interval}ms interval")
-        print(f"📺 Duration: ~{(interval * total_frames) / 1000:.1f} seconds")
+        # Dynamic interval for smooth 60 FPS experience
+        target_fps = 60
+        interval = max(8, int(1000 / target_fps))  # ~60 FPS, minimum 8ms
+        
+        print(f"🎬 Starting smart timing animation...")
+        print(f"⏱️ Animation: {total_frames} frames at ~{target_fps} FPS")
+        print(f"📺 Total Duration: ~{(interval * total_frames) / 1000:.1f} seconds")
+        print(f"⚡ Smart Timing: Fastest={MIN_ANIMATION_TIME}s, Slowest≤{MAX_ANIMATION_TIME}s")
         print(f"🎨 Green bars, black background, selected bars in black")
         print(f"🏆 WINNER: {first_to_complete} (fastest algorithm)")
-        print(f"⚡ Algorithms finish at different times based on performance")
         print(f"🔍 Validation: Each completed algorithm will be validated")
         print(f"💙 Valid sorts turn blue, ❤️ invalid sorts turn red")
+        print(f"maximum animation time: {MAX_ANIMATION_TIME} seconds per algorithm!")
         
         # Create and start animation
         animation_obj = animation.FuncAnimation(
             fig,
-            lambda frame: self._update_animation_frame(frame, algorithms_data, BASE_ANIMATION_FRAMES),
+            lambda frame: self._update_animation_frame(frame, algorithms_data, FAST_ALGO_FRAMES),
             frames=range(total_frames),
             blit=False,
             interval=interval,
