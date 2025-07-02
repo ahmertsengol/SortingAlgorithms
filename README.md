@@ -1,4 +1,4 @@
-# 🎯 Sorting Algorithm Visualizer
+#  Sorting Algorithm Visualizer
 
 Professional Python tool for visualizing and comparing sorting algorithms with real-time animation.
 
@@ -13,6 +13,12 @@ Interactive visualization tool that compares two sorting algorithms side-by-side
 - Customizable dataset size (10-1000 elements)
 - Performance comparison with winner detection
 - Automatic validation of sorting correctness
+## Usage
+
+1. Choose number of bars (10-1000)
+2. Select two algorithms to compare
+3. Watch real-time visualization
+4. View performance results
 
 ## 🚀 Quick Start
 
@@ -24,7 +30,7 @@ pip install matplotlib
 python SortingVisualizer.py
 ```
 
-## 📊 Supported Algorithms & Complexity
+## Supported Algorithms & Complexity
 
 | Algorithm | Best Case | Average Case | Worst Case | Space |
 |-----------|-----------|--------------|------------|-------|
@@ -40,7 +46,7 @@ python SortingVisualizer.py
 | Bogo Sort | O(n) | O((n+1)!) | O(∞) | O(1) |
 | Merge Sort | O(n log n) | O(n log n) | O(n log n) | O(n) |
 
-## 🎮 Demo
+## Demos
 
 ![Sorting Animation](images/Example-1.png)
 *Real-time algorithm comparison*
@@ -48,9 +54,3 @@ python SortingVisualizer.py
 ![Validation Complete](images/Example-2.png)
 *Results with winner detection*
 
-## 🔧 Usage
-
-1. Choose number of bars (10-1000)
-2. Select two algorithms to compare
-3. Watch real-time visualization
-4. View performance results
