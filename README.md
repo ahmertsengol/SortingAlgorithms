@@ -49,7 +49,6 @@ python SortingVisualizer.py
 ## Demos
 
 ![Sorting Animation](images/Example-1.png)
-*Real-time algorithm comparison*
 
 ![Validation Complete](images/Example-2.png)
 
