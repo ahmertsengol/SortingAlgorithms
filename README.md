@@ -47,10 +47,3 @@ python SortingVisualizer.py
 | Bucket Sort | O(n+k) | O(n+k) | O(n²) | O(n) |
 | Bogo Sort | O(n) | O((n+1)!) | O(∞) | O(1) |
 | Merge Sort | O(n log n) | O(n log n) | O(n log n) | O(n) |
-
-## Demos
-
-![Sorting Animation](images/Example-1.png)
-
-![Validation Complete](images/Example-2.png)
-
