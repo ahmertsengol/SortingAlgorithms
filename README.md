@@ -52,5 +52,4 @@ python SortingVisualizer.py
 *Real-time algorithm comparison*
 
 ![Validation Complete](images/Example-2.png)
-*Results with winner detection*
 
